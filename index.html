@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Study Mate is a peer-to-peer study platform that matches classmates for collaborative learning sessions." />
+  <title>Study Mate | Peer-to-Peer Study Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --houston-red: #c8102e;
+      --houston-crimson: #a10d25;
+      --houston-dark: #7a0019;
+      --houston-deep: #4c0013;
+      --warm-white: #fff7f5;
+      --soft-rose: #fbe4e4;
+      --card-bg: #ffffff;
+      --text-dark: #211416;
+      --text-muted: #6a4f53;
+      --shadow-lg: 0 30px 70px rgba(122, 0, 25, 0.25);
+      --shadow-md: 0 18px 45px rgba(200, 16, 46, 0.2);
+      --shadow-soft: 0 12px 32px rgba(76, 0, 19, 0.18);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", "Inter", "Segoe UI", sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(200, 16, 46, 0.12), transparent 55%),
+        radial-gradient(circle at 80% 0%, rgba(122, 0, 25, 0.14), transparent 60%), var(--warm-white);
+      color: var(--text-dark);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    ::selection {
+      background: rgba(200, 16, 46, 0.25);
+      color: var(--text-dark);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page-shell {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: min(1120px, 90vw);
+      margin: 0 auto;
+    }
+
+    header.hero {
+      position: relative;
+      background: linear-gradient(140deg, rgba(200, 16, 46, 0.96), rgba(122, 0, 25, 0.94));
+      color: #ffffff;
+      padding: 36px 0 120px;
+      overflow: hidden;
+      border-bottom-left-radius: var(--radius-xl);
+      border-bottom-right-radius: var(--radius-xl);
+      box-shadow: inset 0 -30px 60px rgba(33, 20, 22, 0.22);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      filter: blur(0.5px);
+      animation: pulse 18s infinite alternate;
+      z-index: 0;
+    }
+
+    .hero::before {
+      top: -160px;
+      right: -120px;
+    }
+
+    .hero::after {
+      bottom: -220px;
+      left: -140px;
+      animation-delay: 4s;
+    }
+
+    nav.top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 48px;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      opacity: 0.85;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+
+    .nav-cta {
+      display: flex;
+      gap: 16px;
+    }
+
+    .primary-btn,
+    .ghost-btn {
+      font-family: inherit;
+      font-weight: 600;
+      border-radius: 999px;
+      padding: 10px 22px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+
+    .primary-btn {
+      background: #ffffff;
+      color: var(--houston-dark);
+      box-shadow: 0 18px 40px rgba(33, 20, 22, 0.22);
+    }
+
+    .primary-btn:hover,
+    .primary-btn:focus {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(33, 20, 22, 0.28);
+    }
+
+    .ghost-btn {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      backdrop-filter: blur(4px);
+    }
+
+    .ghost-btn:hover,
+    .ghost-btn:focus {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .project-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 0.88rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .project-badge span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.12);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 60px;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 4vw + 1rem, 4rem);
+      margin: 0 0 18px;
+      line-height: 1.05;
+    }
+
+    .hero-lede {
+      font-size: 1.05rem;
+      max-width: 540px;
+      opacity: 0.9;
+      margin-bottom: 32px;
+    }
+
+    .highlight-underline {
+      position: relative;
+      display: inline-block;
+    }
+
+    .highlight-underline::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 2px;
+      width: 100%;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.25);
+      z-index: -1;
+      border-radius: 12px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 28px;
+      margin-top: 40px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      min-width: 180px;
+      box-shadow: 0 12px 30px rgba(33, 20, 22, 0.18);
+      backdrop-filter: blur(6px);
+    }
+
+    .stat-card h3 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .stat-card p {
+      margin: 4px 0 0;
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
+
+    .hero-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-card h2 {
+      margin: 0 0 12px;
+      font-size: 1.4rem;
+    }
+
+    .hero-card p {
+      margin: 0 0 18px;
+      font-size: 0.95rem;
+      opacity: 0.85;
+    }
+
+    .profile-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .profile-stack {
+      display: flex;
+    }
+
+    .profile-stack span {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      margin-left: -10px;
+      backdrop-filter: blur(4px);
+    }
+
+    .profile-stack span:first-child {
+      margin-left: 0;
+    }
+
+    .profile-text strong {
+      display: block;
+      font-size: 0.95rem;
+    }
+
+    .profile-text span {
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    .floating-card {
+      margin-top: 24px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      animation: float 7s ease-in-out infinite;
+    }
+
+    .floating-card strong {
+      font-size: 1.05rem;
+    }
+
+    .floating-card span {
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    main {
+      flex: 1;
+      margin-top: -70px;
+    }
+
+    section {
+      padding: 80px 0;
+    }
+
+    section.light-bg {
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      margin: 0 auto 70px;
+      width: min(1160px, 94vw);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2.1rem, 3vw + 1rem, 2.8rem);
+      margin-bottom: 12px;
+      color: var(--houston-dark);
+    }
+
+    .section-heading p {
+      margin: 0 auto;
+      max-width: 640px;
+      color: var(--text-muted);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 28px;
+      padding: 0 32px 20px;
+    }
+
+    .feature-card {
+      background: var(--warm-white);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      border: 1px solid rgba(200, 16, 46, 0.12);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::after {
+      content: "";
+      position: absolute;
+      top: -120px;
+      right: -90px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(200, 16, 46, 0.18), transparent 60%);
+      transform: rotate(32deg);
+    }
+
+    .icon-circle {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(200, 16, 46, 0.1);
+      color: var(--houston-dark);
+      font-size: 1.2rem;
+      margin-bottom: 18px;
+    }
+
+    .feature-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .study-flow {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      gap: 44px;
+      align-items: center;
+      padding: 0 32px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 22px;
+      position: relative;
+      padding-left: 22px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      left: 0;
+      width: 3px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(200, 16, 46, 0.65), rgba(122, 0, 25, 0.85));
+    }
+
+    .timeline-card {
+      background: rgba(251, 228, 228, 0.7);
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      box-shadow: 0 12px 26px rgba(200, 16, 46, 0.16);
+      border: 1px solid rgba(200, 16, 46, 0.18);
+    }
+
+    .timeline-card strong {
+      display: block;
+      color: var(--houston-dark);
+      margin-bottom: 6px;
+    }
+
+    .timeline-card span {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .insight-card {
+      background: linear-gradient(145deg, rgba(200, 16, 46, 0.12), rgba(122, 0, 25, 0.3));
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      box-shadow: var(--shadow-md);
+      color: var(--houston-dark);
+    }
+
+    .insight-card h3 {
+      margin-top: 0;
+    }
+
+    .insight-metric {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.65);
+      color: var(--houston-dark);
+    }
+
+    .insight-metric strong {
+      font-size: 1.8rem;
+    }
+
+    .login-section {
+      padding: 0 32px 80px;
+    }
+
+    .login-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 40px;
+      align-items: start;
+    }
+
+    .login-intro {
+      background: linear-gradient(160deg, rgba(200, 16, 46, 0.1), rgba(255, 215, 215, 0.3));
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      border: 1px solid rgba(200, 16, 46, 0.15);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .login-intro h2 {
+      margin-top: 0;
+      color: var(--houston-dark);
+    }
+
+    .login-intro ul {
+      margin: 18px 0 0;
+      padding-left: 22px;
+      color: var(--text-muted);
+    }
+
+    .login-card {
+      position: relative;
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      padding: 34px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(200, 16, 46, 0.16);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .login-card.success {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 60px rgba(76, 0, 19, 0.25);
+      border-color: rgba(122, 0, 25, 0.4);
+    }
+
+    .login-card h3 {
+      margin-top: 0;
+      margin-bottom: 6px;
+    }
+
+    .login-card p {
+      margin: 0 0 20px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .input-field {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 18px;
+    }
+
+    .input-field label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      color: var(--houston-dark);
+    }
+
+    .input-field input {
+      font: inherit;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(122, 0, 25, 0.18);
+      background: rgba(251, 228, 228, 0.4);
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .input-field input:focus {
+      outline: none;
+      border-color: rgba(200, 16, 46, 0.55);
+      box-shadow: 0 0 0 4px rgba(200, 16, 46, 0.18);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: none;
+      font-weight: 600;
+      background: linear-gradient(120deg, var(--houston-red), var(--houston-dark));
+      color: #ffffff;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .submit-btn:hover,
+    .submit-btn:focus {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 36px rgba(200, 16, 46, 0.25);
+    }
+
+    .login-hint {
+      margin: 16px 0 0;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .login-message {
+      margin-top: 18px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 0.9rem;
+      border: 1px solid transparent;
+      background: rgba(200, 16, 46, 0.08);
+      color: var(--houston-dark);
+    }
+
+    .login-message.success {
+      background: rgba(0, 128, 55, 0.12);
+      border-color: rgba(0, 128, 55, 0.2);
+      color: #0f6137;
+    }
+
+    .login-message.error {
+      background: rgba(200, 16, 46, 0.14);
+      border-color: rgba(200, 16, 46, 0.22);
+      color: var(--houston-dark);
+    }
+
+    .login-message.neutral {
+      background: rgba(122, 0, 25, 0.08);
+      border-color: rgba(122, 0, 25, 0.18);
+    }
+
+    .dashboard {
+      margin-top: 34px;
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(200, 16, 46, 0.14);
+    }
+
+    .dashboard[hidden] {
+      display: none;
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .dashboard-header h3 {
+      margin: 0;
+      color: var(--houston-dark);
+    }
+
+    .logout-btn {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(200, 16, 46, 0.25);
+      background: rgba(251, 228, 228, 0.6);
+      font-weight: 600;
+      color: var(--houston-dark);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .logout-btn:hover,
+    .logout-btn:focus {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(200, 16, 46, 0.2);
+    }
+
+    .dashboard-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+    }
+
+    .dashboard-card {
+      padding: 22px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(145deg, rgba(200, 16, 46, 0.08), rgba(122, 0, 25, 0.2));
+      border: 1px solid rgba(200, 16, 46, 0.16);
+    }
+
+    .dashboard-card strong {
+      display: block;
+      color: var(--houston-dark);
+      margin-bottom: 12px;
+    }
+
+    .dashboard-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+    .testimonials {
+      width: min(1160px, 94vw);
+      margin: 0 auto 80px;
+      padding: 70px 32px;
+      background: linear-gradient(130deg, rgba(122, 0, 25, 0.95), rgba(200, 16, 46, 0.88));
+      border-radius: var(--radius-xl);
+      color: #ffffff;
+      box-shadow: 0 32px 70px rgba(122, 0, 25, 0.28);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonials::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.2), transparent 55%);
+      pointer-events: none;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 26px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 18px 40px rgba(33, 20, 22, 0.2);
+      backdrop-filter: blur(6px);
+    }
+
+    .testimonial-card strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .testimonial-card span {
+      font-size: 0.85rem;
+      opacity: 0.85;
+    }
+
+    .cta-final {
+      width: min(960px, 92vw);
+      margin: 0 auto 120px;
+      text-align: center;
+      padding: 70px 32px;
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(200, 16, 46, 0.14);
+    }
+
+    .cta-final h2 {
+      margin-top: 0;
+      color: var(--houston-dark);
+    }
+
+    footer {
+      background: #150508;
+      color: rgba(255, 255, 255, 0.7);
+      padding: 48px 0 36px;
+      text-align: center;
+      border-top-left-radius: var(--radius-xl);
+      border-top-right-radius: var(--radius-xl);
+    }
+
+    footer p {
+      margin: 6px 0;
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 14px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+
+    .footer-links a:hover,
+    .footer-links a:focus {
+      color: #ffffff;
+    }
+
+    .floating-badge {
+      position: absolute;
+      top: 105px;
+      right: 12%;
+      background: #ffffff;
+      color: var(--houston-dark);
+      padding: 14px 18px;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 20px 40px rgba(33, 20, 22, 0.22);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 2;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-badge span {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--houston-red);
+      box-shadow: 0 0 0 6px rgba(200, 16, 46, 0.2);
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1) translateY(0);
+      }
+      50% {
+        transform: scale(1.05) translateY(-12px);
+      }
+      100% {
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .floating-badge {
+        display: none;
+      }
+
+      .login-grid,
+      .study-flow {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        margin-top: 28px;
+      }
+
+      .hero-stats {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 720px) {
+      header.hero {
+        padding: 28px 0 110px;
+      }
+
+      nav.top-nav {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .hero-stats {
+        gap: 18px;
+        margin-top: 28px;
+      }
+
+      .stat-card {
+        min-width: 150px;
+      }
+
+      section {
+        padding: 64px 0;
+      }
+
+      .features-grid {
+        padding: 0 18px 10px;
+      }
+
+      .study-flow,
+      .login-section {
+        padding: 0 18px 64px;
+      }
+
+      .testimonials {
+        padding: 56px 24px;
+      }
+
+      .cta-final {
+        padding: 56px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="container hero-content">
+        <nav class="top-nav">
+          <div class="logo">Study Mate</div>
+          <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#flow">How it Works</a></li>
+            <li><a href="#login">Login</a></li>
+            <li><a href="#impact">Impact</a></li>
+          </ul>
+          <div class="nav-cta">
+            <a class="ghost-btn" href="#login">Student Access</a>
+            <a class="primary-btn" href="#cta">Get Started</a>
+          </div>
+        </nav>
+
+        <div class="floating-badge">
+          <span></span>
+          Match classmates in minutes
+        </div>
+
+        <div class="hero-grid">
+          <div>
+            <div class="project-badge"><span></span>Study Mate Personal Project 2025 • Built a peer-to-peer study platform connecting students enrolled in the same classes.</div>
+            <h1>Own your learning journey with a <span class="highlight-underline">University of Houston</span> inspired study community.</h1>
+            <p class="hero-lede">
+              Study Mate pairs you with classmates, curates collaborative agendas, and keeps your academic momentum blazing Cougar red. Launch whiteboard sessions, drop resources, and stay accountable from any device.
+            </p>
+            <div class="hero-stats">
+              <div class="stat-card">
+                <h3>92%</h3>
+                <p>of matched students reported higher confidence before exams.</p>
+              </div>
+              <div class="stat-card">
+                <h3>35</h3>
+                <p>active study circles built around real UH course rosters.</p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="hero-card">
+              <h2>Live Class Match Preview</h2>
+              <p>"COSC 1436 • Intro to Programming" group is ready for tonight's cram session.</p>
+              <div class="profile-group">
+                <div class="profile-stack" aria-hidden="true">
+                  <span>AJ</span>
+                  <span>MS</span>
+                  <span>LG</span>
+                  <span>HK</span>
+                </div>
+                <div class="profile-text">
+                  <strong>4 peers already in the room</strong>
+                  <span>Shared Google Docs, flashcards, breakout prompts.</span>
+                </div>
+              </div>
+              <div class="floating-card">
+                <div>
+                  <strong>Session Starts</strong>
+                  <span>Today • 7:30 PM CST</span>
+                </div>
+                <div>
+                  <strong>Focus Score</strong>
+                  <span>89%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="features" class="light-bg">
+        <div class="section-heading">
+          <h2>Built for collaborative Cougar success</h2>
+          <p>Powerful peer-to-peer workflows keep you on track before quizzes, labs, and finals. Dive into curated study rooms, tailored agendas, and effortless accountability tools.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="icon-circle">🧭</div>
+            <h3>Class Roster Matching</h3>
+            <p>Automatically connect with classmates enrolled in the same UH courses, including honors and lab sections.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon-circle">📝</div>
+            <h3>Smart Study Agendas</h3>
+            <p>Generate collaborative agendas from lecture slides and textbook chapters to focus on what really matters.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon-circle">🎯</div>
+            <h3>Accountability Pulse</h3>
+            <p>Track commitments with real-time check-ins, nudges, and post-session reflections that drive retention.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon-circle">📚</div>
+            <h3>Resource Locker</h3>
+            <p>Share flashcards, annotated PDFs, and practice quizzes inside class-specific lockers.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon-circle">💬</div>
+            <h3>Live Collaboration</h3>
+            <p>Launch whiteboards, breakout prompts, and Pomodoro countdowns in real time from any browser.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon-circle">🏆</div>
+            <h3>Progress Insights</h3>
+            <p>Measure study streaks, GPA impact, and exam readiness with dashboards tailored to your goals.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="flow" class="light-bg">
+        <div class="study-flow">
+          <div>
+            <div class="section-heading" style="text-align: left; margin-bottom: 32px;">
+              <h2>How Study Mate keeps you synced</h2>
+              <p>From matching to mastery, every interaction is tuned for the grind of UH academics.</p>
+            </div>
+            <div class="timeline">
+              <div class="timeline-card">
+                <strong>01 • Claim your class schedule</strong>
+                <span>Add COSC, BIOL, MATH, or CORE courses to sync with your peers and unlock study circles.</span>
+              </div>
+              <div class="timeline-card">
+                <strong>02 • Study circle assembled</strong>
+                <span>See who else is in your section, vote on meeting times, and auto-generate prep guides.</span>
+              </div>
+              <div class="timeline-card">
+                <strong>03 • Collaborative sessions</strong>
+                <span>Launch agenda-driven rooms with timers, shared notes, and roles (scribe, quizmaster, coach).</span>
+              </div>
+              <div class="timeline-card">
+                <strong>04 • Feedback &amp; momentum</strong>
+                <span>Receive session recaps, highlight trouble spots, and queue your next meetup with a tap.</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="insight-card" id="impact">
+              <h3>Impact Snapshot</h3>
+              <p>Students who lean on Study Mate stay on pace and elevate their course grades.</p>
+              <div class="insight-metric">
+                <div>
+                  <strong>+1.4 GPA</strong>
+                  <span style="display: block; font-size: 0.85rem; color: var(--text-muted);">average lift after three collaborative sessions</span>
+                </div>
+                <div style="text-align: right;">
+                  <strong>87%</strong>
+                  <span style="display: block; font-size: 0.85rem; color: var(--text-muted);">stick with weekly study rituals</span>
+                </div>
+              </div>
+              <p style="margin-top: 18px;">Staying accountable with peers builds unstoppable momentum—perfect for Cougars balancing labs, organizations, and game-day energy.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="login" class="login-section">
+        <div class="login-grid">
+          <div class="login-intro">
+            <h2>Log in to unlock your Study Mate workspace</h2>
+            <p>Use the dedicated demo credentials to explore the platform experience. Once inside, you can see matched sessions, monitor accountability, and view curated resources.</p>
+            <ul>
+              <li>Username: <strong>admin</strong></li>
+              <li>Password: <strong>apasswoed</strong></li>
+              <li>Session preview updates dynamically as you log in and out.</li>
+            </ul>
+          </div>
+          <div>
+            <div class="login-card" id="login-card">
+              <h3>Student Login</h3>
+              <p>Enter the credentials above to join your peer-to-peer study hub.</p>
+              <form id="login-form">
+                <div class="input-field">
+                  <label for="username">Username</label>
+                  <input type="text" id="username" name="username" autocomplete="username" placeholder="admin" required />
+                </div>
+                <div class="input-field">
+                  <label for="password">Password</label>
+                  <input type="password" id="password" name="password" autocomplete="current-password" placeholder="apasswoed" required />
+                </div>
+                <button type="submit" class="submit-btn">Log In</button>
+              </form>
+              <p class="login-hint">Need help? Try username <strong>admin</strong> with password <strong>apasswoed</strong>.</p>
+              <div id="login-message" class="login-message" aria-live="polite">Enter the credentials to access your dashboard.</div>
+            </div>
+
+            <div class="dashboard" id="dashboard" hidden>
+              <div class="dashboard-header">
+                <h3>Welcome back, admin!</h3>
+                <button class="logout-btn" id="logout" type="button">Log out</button>
+              </div>
+              <div class="dashboard-cards">
+                <div class="dashboard-card">
+                  <strong>Upcoming Sessions</strong>
+                  <ul>
+                    <li>CHEM 1331 problem set review • Tomorrow 6:00 PM</li>
+                    <li>MATH 2414 derivative drills • Thu 4:30 PM</li>
+                    <li>ENGL 1302 research outline lab • Fri 11:00 AM</li>
+                  </ul>
+                </div>
+                <div class="dashboard-card">
+                  <strong>Focus Goals</strong>
+                  <ul>
+                    <li>Complete flashcard deck for COSC 2436</li>
+                    <li>Upload annotated lab notes by midnight</li>
+                    <li>Schedule accountability check-in for Sunday</li>
+                  </ul>
+                </div>
+                <div class="dashboard-card">
+                  <strong>Match Momentum</strong>
+                  <ul>
+                    <li>12 peers ready for weekend cram</li>
+                    <li>5 shared documents in your locker</li>
+                    <li>3 streak weeks maintained</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="testimonials">
+        <div class="section-heading" style="color: #ffffff;">
+          <h2>Cougars keeping each other accountable</h2>
+          <p>Study Mate amplifies teamwork across majors, commuter schedules, and campus organizations.</p>
+        </div>
+        <div class="testimonial-grid">
+          <div class="testimonial-card">
+            <strong>Aleena • Biomedical Engineering</strong>
+            <span>"We built a pre-exam ritual with quick knowledge checks and last-minute tutoring videos. The shared locker keeps everything in sync."</span>
+          </div>
+          <div class="testimonial-card">
+            <strong>Carlos • Computer Science</strong>
+            <span>"Study Mate matched me with three other COSC majors. We rotated code review sessions and crushed our project sprint."</span>
+          </div>
+          <div class="testimonial-card">
+            <strong>Morgan • Finance</strong>
+            <span>"I commute from Katy, so finding on-campus study partners was tough. Now I log in each night and my team is ready with prompts."</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="cta" class="cta-final">
+        <h2>Ready to fuel your Study Mate mission?</h2>
+        <p>Grab the login credentials above, jump into the dashboard, and imagine how your classmates can climb together. Built with Cougar grit, designed for the grind.</p>
+        <div style="margin-top: 26px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+          <a class="primary-btn" href="#login">Access Demo Login</a>
+          <a class="ghost-btn" href="#features">Explore Capabilities</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p><strong>Study Mate</strong> • Personal Project 2025</p>
+        <p>Inspired by the University of Houston community and powered by collaborative ambition.</p>
+        <div class="footer-links">
+          <a href="#features">Features</a>
+          <a href="#flow">Process</a>
+          <a href="#login">Login</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const loginForm = document.getElementById("login-form");
+      const loginMessage = document.getElementById("login-message");
+      const dashboard = document.getElementById("dashboard");
+      const loginCard = document.getElementById("login-card");
+      const logoutBtn = document.getElementById("logout");
+
+      const successMessage = "Access granted! Study Mate workspace unlocked.";
+
+      const setLoggedInState = (text) => {
+        loginMessage.textContent = text;
+        loginMessage.className = "login-message success";
+        dashboard.removeAttribute("hidden");
+        loginCard.classList.add("success");
+      };
+
+      const resetState = (text, cssClass = "login-message") => {
+        loginMessage.textContent = text;
+        loginMessage.className = cssClass;
+        dashboard.setAttribute("hidden", "");
+        loginCard.classList.remove("success");
+      };
+
+      if (window.localStorage.getItem("studyMateLoggedIn") === "true") {
+        setLoggedInState("Welcome back, admin! Ready to match with your class cohort?");
+      }
+
+      loginForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const username = loginForm.username.value.trim();
+        const password = loginForm.password.value;
+
+        if (username === "admin" && password === "apasswoed") {
+          setLoggedInState(successMessage);
+          window.localStorage.setItem("studyMateLoggedIn", "true");
+        } else {
+          resetState('Invalid credentials. Try username "admin" with password "apasswoed".', "login-message error");
+        }
+      });
+
+      logoutBtn.addEventListener("click", () => {
+        window.localStorage.removeItem("studyMateLoggedIn");
+        resetState("You have logged out. Enter the credentials again to reopen the workspace.", "login-message neutral");
+        loginForm.reset();
+      });
+    })();
+  </script>
+</body>
+</html>
